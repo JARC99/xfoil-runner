@@ -1,15 +1,21 @@
+"""Runs an XFOIL analysis for a given airfoil and flow conditions"""
+import os
 import subprocess
 import numpy as np
 
+# %% Inputs
+
+airfoil_name = "NACA0012"
 alpha_i = 0
 alpha_f = 10
 alpha_step = 0.25
-
-airfoil_name = "NACA0012"
-
 Re = 1000000
-
 n_iter = 100
+
+# %% XFOIL input file writer 
+
+if os.path.exists("polar_file.txt"):
+    os.remove("polar_file.txt")
 
 input_file = open("xfoil_input.in", 'w')
 input_file.write("LOAD {0}.dat\n".format(airfoil_name))
@@ -28,4 +34,4 @@ input_file.close()
 
 subprocess.call("xfoil.exe < xfoil_input.in", shell=True)
 
-polar_file = np.loadtxt("polar_file.txt", skiprows=12)
+polar_data = np.loadtxt("polar_file.txt", skiprows=12)
