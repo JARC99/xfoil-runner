@@ -17,7 +17,7 @@ n_iter = 100
 if os.path.exists("polar_file.txt"):
     os.remove("polar_file.txt")
 
-input_file = open("xfoil_input.in", 'w')
+input_file = open("input_file.in", 'w')
 input_file.write("LOAD {0}.dat\n".format(airfoil_name))
 input_file.write(airfoil_name + '\n')
 input_file.write("PANE\n")
@@ -32,6 +32,6 @@ input_file.write("\n\n")
 input_file.write("quit\n")
 input_file.close()
 
-subprocess.call("xfoil.exe < xfoil_input.in", shell=True)
+subprocess.call("xfoil.exe < input_file.in", shell=True)
 
 polar_data = np.loadtxt("polar_file.txt", skiprows=12)
